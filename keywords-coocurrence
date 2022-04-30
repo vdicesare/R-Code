@@ -1,0 +1,14 @@
+setwd("~/Desktop/keywords-coocurrence-script")
+library(bibliometrix)
+
+#convertir exportación de Scopus en dataframe
+Keywords <- convert2df("keywords.bib", dbsource = "scopus", format = "bibtex")
+
+#crear matriz de coocurrencias
+KeywordsMatrix <- biblioNetwork(Keywords, analysis = "co-occurrences", network = "keywords", sep = ";")
+
+#crear red de palabras clave
+KeywordsNet <- networkPlot(KeywordsMatrix, normalize="association", Title = "Keywords Co-occurrence", type = "auto", size.cex=TRUE, label.cex=TRUE,)
+
+#representar red en VOSViewer. Para que el llamado funcione, el archivo VOSviewer.jar debe encontrarse almacenado en el directorio del proyecto
+net2VOSviewer(KeywordsNet)
